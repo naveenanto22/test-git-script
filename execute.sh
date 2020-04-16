@@ -8,6 +8,7 @@ mkdir -p $codePath;
 protoc $schemaFileName --${lang}_out=./$codePath;
 git checkout -B code/$lang;
 git ls-files | grep -v "^com/csharp" | xargs git rm -f --quiet --cached;
+git status;
 git add .;
 git commit -m "first commit"
 
