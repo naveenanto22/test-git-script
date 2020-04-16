@@ -7,7 +7,7 @@ echo "$lang with $schemaFileName"
 mkdir -p $codePath
 protoc $schemaFileName --${lang}_out=./$codePath
 git checkout -B code/$lang
-git ls-files | grep -v "^$codePath" | xargs git rm --quiet --cached;
+git ls-files | grep -v "^$codePath" | xargs git rm -f --quiet --cached;
 git add .
 git commit -m "first commit"
 
