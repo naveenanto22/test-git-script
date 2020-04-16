@@ -10,6 +10,6 @@ git checkout -B code/$lang;
 git ls-files | grep -v "^com/csharp" | xargs git rm -f --quiet --cached;
 git status;
 git add .;
-git commit -m "first commit"
+git commit -m "first commit";
 
 # git ls-files | grep -v "^$1"
