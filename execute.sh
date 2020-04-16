@@ -5,7 +5,7 @@ codePath=com/$lang
 schemaFileName=$2
 echo "$lang with $schemaFileName" 
 mkdir -p $codePath
-protoc $schemaFileName --$lang_out=./$codePath
+protoc $schemaFileName --${lang}_out=./$codePath
 git checkout -b code/$lang || git checkout code/$lang
 git ls-files | grep -v "^$codePath" | xargs git rm --quiet --cached
 git add .
