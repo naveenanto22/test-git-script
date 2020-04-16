@@ -18,7 +18,7 @@ async function run(lang = 'csharp') {
         {
             await runWithSpaces(`git checkout code/${lang}`);
         }
-        await runWithSpaces(`git filter-repo --path ${codePath} --to-subdirectory-filter dao`);
+        await runWithSpaces(`git ls-files | grep -v "^com/csharp" | xargs git rm -q --cached`);
         await runWithSpaces(`git add .`);
         await runWithSpaces(`git commit -m "first"`);
     } catch (err) {
