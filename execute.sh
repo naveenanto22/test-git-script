@@ -9,7 +9,7 @@ protoc $schemaFileName --${lang}_out=./$codePath;
 git checkout -B code/$lang;
 git ls-files | grep -v "^com/csharp" | xargs git rm -f --quiet --cached;
 git status;
-git add .;
+git add com/;
 git commit -m "first commit";
 
 # git ls-files | grep -v "^$1"
