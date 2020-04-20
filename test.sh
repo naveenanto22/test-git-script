@@ -56,7 +56,7 @@ for (( idx=${#languages[@]}-1 ; idx>=0 ; idx-- )) ; do
 
     # Run code generator for each schema file
     for schema_file in ${schema_files[@]}; do
-        if [[ -f "./code_generator.sh"]]; 
+        if [[ -f "./code_generator.sh" ]]; 
         then
             source ./code_generator.sh;
         else
