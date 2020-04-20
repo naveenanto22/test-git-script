@@ -46,47 +46,48 @@ source_branch=$(git rev-parse --abbrev-ref HEAD);
 log_debug "Source branch : $source_branch";
 
 for (( idx=${#languages[@]}-1 ; idx>=0 ; idx-- )) ; do
-    
+    lang=${languages[idx]}
+
     mkdir -p "$codepath";
 
     for schema_file in ${schema_files[@]}; do
-        protoc "$schema_file" --"${languages[idx]}_out"=./"$codepath";
+        protoc "$schema_file" --"${lang}_out"=./"$codepath";
     done
 
-    git stash -u -m ${languages[idx]};
+    git stash -u -m ${lang};
 
 done
 
-# for lang in ${languages[@]}; do
+for lang in ${languages[@]}; do
 
-#     current_branch_prefix="$branch_prefix/$lang";
+    current_branch_prefix="$branch_prefix/$lang";
 
-#     current_branch="$branch_prefix/$lang";
+    current_branch="$branch_prefix/$lang";
 
-#     if [[ ! $(git checkout -b "$current_branch" origin/"$current_branch") ]]; then
-#         if [[ ! $(git checkout -b "$current_branch") ]]; then
-#             git checkout "$current_branch";
+    if [[ ! $(git checkout -b "$current_branch" origin/"$current_branch") ]]; then
+        if [[ ! $(git checkout -b "$current_branch") ]]; then
+            git checkout "$current_branch";
             
-#             # Might not be needed in our case
-#             # git pull origin "$current_branch";
-#         fi
-#     fi
+            # Might not be needed in our case
+            # git pull origin "$current_branch";
+        fi
+    fi
 
 
-#     git_files=$(git ls-files);
+    git_files=$(git ls-files);
 
-#     echo "$git_files" | xargs rm -rfd;
-#     echo "$git_files" | xargs git rm -f --quiet --cached;
+    echo "$git_files" | xargs rm -rfd;
+    echo "$git_files" | xargs git rm -f --quiet --cached;
 
-#     git ls-files -o | xargs rm -rfd;
+    git ls-files -o | xargs rm -rfd;
 
-#     git stash pop;
+    git stash pop;
 
-#     git add .;
-#     git status;
-#     git commit -m "$commit_msg";
-#     git push -f origin "$current_branch";
+    git add .;
+    git status;
+    git commit -m "$commit_msg";
+    git push -f origin "$current_branch";
 
-# done
+done
 
-# git checkout $source_branch;
+git checkout $source_branch;
