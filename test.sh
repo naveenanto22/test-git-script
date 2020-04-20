@@ -39,47 +39,54 @@ log_error () {
 
 source ./input_parser.sh;
 
-log_debug "Lang = $lang | Generator = $generator | Schema Files = $schema_files_unseperated | Code Path = $codepath | Commit Msg = $commit_msg";
+log_debug "Lang = $languages | Generator = $generator | Schema Files = $schema_files_unseperated | Code Path = $codepath | Commit Msg = $commit_msg";
 
 source_branch=$(git rev-parse --abbrev-ref HEAD);
 
 log_debug "Source branch : $source_branch";
 
-mkdir -p "$codepath";
+for (( idx=${#languages[@]}-1 ; idx>=0 ; idx-- )) ; do
+    
+    mkdir -p "$codepath";
 
-for schema_file in ${schema_files[@]}; do
-    protoc "$schema_file" --"${lang}_out"=./"$codepath";
+    for schema_file in ${schema_files[@]}; do
+        protoc "$schema_file" --"${languages[idx]}_out"=./"$codepath";
+    done
+
+    git stash -u -m ${languages[idx]};
+
 done
 
-git stash -u;
+# for lang in ${languages[@]}; do
 
-current_branch_prefix="$branch_prefix/$lang";
+#     current_branch_prefix="$branch_prefix/$lang";
 
-current_branch="$branch_prefix/$lang/$version";
+#     current_branch="$branch_prefix/$lang";
 
-if [[ ! $(git checkout -b "$current_branch" origin/"$current_branch") ]]; then
-    if [[ ! $(git checkout -b "$current_branch") ]]; then
-        git checkout "$current_branch";
-        
-        # Might not be needed in our case
-        # git pull origin "$current_branch";
-    fi
-fi
-
-
-git_files=$(git ls-files);
-
-echo "$git_files" | xargs rm -rfd;
-echo "$git_files" | xargs git rm -f --quiet --cached;
-
-git ls-files -o | xargs rm -rfd;
-
-git stash pop;
-
-git add .;
-git status;
-git commit -m "$commit_msg";
-git push -f origin "$current_branch";
+#     if [[ ! $(git checkout -b "$current_branch" origin/"$current_branch") ]]; then
+#         if [[ ! $(git checkout -b "$current_branch") ]]; then
+#             git checkout "$current_branch";
+            
+#             # Might not be needed in our case
+#             # git pull origin "$current_branch";
+#         fi
+#     fi
 
 
-git checkout $source_branch;
+#     git_files=$(git ls-files);
+
+#     echo "$git_files" | xargs rm -rfd;
+#     echo "$git_files" | xargs git rm -f --quiet --cached;
+
+#     git ls-files -o | xargs rm -rfd;
+
+#     git stash pop;
+
+#     git add .;
+#     git status;
+#     git commit -m "$commit_msg";
+#     git push -f origin "$current_branch";
+
+# done
+
+# git checkout $source_branch;

@@ -10,11 +10,11 @@ while [ $# -gt 0 ]; do
 
     case "$1" in
         # 1. Get language to generate code
-        --lang=*)
-            lang="${1#*=}"
+        --languages=*)
+            lang_unseparated="${1#*=}"
             ;;
-        --lang)
-            lang="${2}"
+        --languages)
+            lang_unseparated="${2}"
             shift
             ;;
 
@@ -54,15 +54,6 @@ while [ $# -gt 0 ]; do
             shift
             ;;
 
-        # 6. Get version number of the schema
-        --version=*)
-            version="${1#*=}"
-            ;;
-        --version)
-            version="${2}"
-            shift
-            ;;
-
         # 7. Get branch prefix. The generated code will be placed in branch: {branch_prefix}/{lang}
         --branch_prefix=*)
             branch_prefix="${1#*=}"
@@ -75,6 +66,8 @@ while [ $# -gt 0 ]; do
         *)
             if [[ $previous_arg == "--schema_files" ]]; then
                 schema_files_unseperated="$schema_files_unseperated,$1"
+            elif [[ $previous_arg == "--lang" ]]; then
+                lang_unseparated="$lang,$1"
             else
                 log_error "Unknown input: $1. $previous_arg doesn't accept multiple params!"
                 exit 1
@@ -85,14 +78,15 @@ while [ $# -gt 0 ]; do
 done
 
 # Default language as `java`
-lang=${lang:-"java"}
+lang_unseparated=${lang_unseparated:-"java"}
+languages=(${lang_unseparated//,/ })
 
 # Default generator as `proto`
 generator=${generator:-"proto"}
 
 # Default schema file as `schema.{generator}`
 schema_files_unseperated=${schema_files_unseperated:-"schema.$generator"}
-schema_files=("${schema_files_unseperated//,/ }");
+schema_files=(${schema_files_unseperated//,/ })
 
 # Default code path as `schema/`
 codepath=${codepath:-"schema"}
