@@ -28,4 +28,5 @@ message Person {
 // Our address book file is just one of these.
 message AddressBook {
   repeated Person people = 1;
+  string creator = 2;
 }
