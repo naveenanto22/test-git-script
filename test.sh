@@ -60,7 +60,9 @@ current_branch="$branch_prefix/$lang/$version";
 if [[ ! $(git checkout -b "$current_branch" origin/"$current_branch") ]]; then
     if [[ ! $(git checkout -b "$current_branch") ]]; then
         git checkout "$current_branch";
-        git pull origin "$current_branch";
+        
+        # Might not be needed in our case
+        # git pull origin "$current_branch";
     fi
 fi
 
