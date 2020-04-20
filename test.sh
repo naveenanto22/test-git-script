@@ -75,6 +75,7 @@ git ls-files -o | xargs rm -rfd;
 git stash pop;
 
 git add .;
+git status;
 git commit -m "$commit_msg";
 git push -f origin "$current_branch";
 
