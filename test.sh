@@ -64,10 +64,10 @@ fi
 
 git_files=$(git ls-files);
 
-echo "$git_files" | grep -v "^$codepath" | xargs rm -rfd;
-echo "$git_files" | grep -v "^$codepath" | xargs git rm -f --quiet --cached;
+echo "$git_files" | xargs rm -rfd;
+echo "$git_files" | xargs git rm -f --quiet --cached;
 
-git ls-files -o | grep -v "^$codepath" | xargs rm -rfd;
+git ls-files -o | xargs rm -rfd;
 
 git stash pop;
 
