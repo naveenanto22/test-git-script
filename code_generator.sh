@@ -1,0 +1,1 @@
+protoc "$schema_file" --"${lang}_out"="$codepath";

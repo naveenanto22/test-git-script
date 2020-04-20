@@ -41,53 +41,63 @@ source ./input_parser.sh;
 
 log_debug "Lang = $languages | Generator = $generator | Schema Files = $schema_files_unseperated | Code Path = $codepath | Commit Msg = $commit_msg";
 
+# Get source branch info
 source_branch=$(git rev-parse --abbrev-ref HEAD);
-
 log_debug "Source branch : $source_branch";
 
+# Iterate through languages in reverse inorder for git stash to be in given order
 for (( idx=${#languages[@]}-1 ; idx>=0 ; idx-- )) ; do
-    lang=${languages[idx]}
+    lang=${languages[idx]};
+    
+    # Create a local directory to save the code
+    if [[ "$codepath" != "./" && "$codepath" != "." && "$codepath" != "../" ]]; then
+        mkdir -p "$codepath";
+    fi
 
-    mkdir -p "$codepath";
-
+    # Run code generator for each schema file
     for schema_file in ${schema_files[@]}; do
-        protoc "$schema_file" --"${lang}_out"=./"$codepath";
+        if [[ -f "./code_generator.sh"]]; 
+        then
+            source ./code_generator.sh;
+        else
+            protoc "$schema_file" --"${lang}_out"="$codepath";
+        fi
     done
 
+    # stash the changes for the current language
     git stash -u -m ${lang};
-
 done
 
+# Iterate over languages in natural order as items were stashed in reverse order
 for lang in ${languages[@]}; do
 
-    current_branch_prefix="$branch_prefix/$lang";
+    # 1. Create a branch for language
 
-    current_branch="$branch_prefix/$lang";
-
-    if [[ ! $(git checkout -b "$current_branch" origin/"$current_branch") ]]; then
-        if [[ ! $(git checkout -b "$current_branch") ]]; then
-            git checkout "$current_branch";
+    code_branch="$branch_prefix/$lang";
+    if [[ ! $(git checkout -b "$code_branch" origin/"$code_branch") ]]; then # Try creating a branch from remote
+        if [[ ! $(git checkout -b "$code_branch") ]]; then # if remote branch doesn't exist try creating a new local branch
+            git checkout "$code_branch"; # Check out the local branch if a local branch already exists
             
             # Might not be needed in our case
-            # git pull origin "$current_branch";
+            # git pull origin "$code_branch";
         fi
     fi
 
-
+    # 2. Remove all exisiting files
     git_files=$(git ls-files);
-
     echo "$git_files" | xargs rm -rfd;
     echo "$git_files" | xargs git rm -f --quiet --cached;
-
     git ls-files -o | xargs rm -rfd;
 
+    # 3. Write generated code
     git stash pop;
 
+    # 4. Update the repository
     git add .;
-    git status;
     git commit -m "$commit_msg";
-    git push -f origin "$current_branch";
+    git push -f origin "$code_branch";
 
 done
 
+# Move back to source branch
 git checkout $source_branch;
