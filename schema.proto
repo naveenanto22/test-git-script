@@ -18,7 +18,6 @@ message Person {
   message PhoneNumber {
     string number = 1;
     PhoneType type = 2;
-    string areacode = 3;
   }
 
   repeated PhoneNumber phones = 4;
