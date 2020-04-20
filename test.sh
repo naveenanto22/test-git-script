@@ -57,7 +57,7 @@ current_branch_prefix="$branch_prefix/$lang";
 
 current_branch="$branch_prefix/$lang/$version";
 
-if [[ ! $(git checkout -t origin/"$current_branch") ]]; then
+if [[ ! $(git checkout -b "$current_branch" origin/"$current_branch") ]]; then
     git checkout -b "$current_branch";
 fi
 
