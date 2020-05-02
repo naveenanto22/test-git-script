@@ -41,8 +41,8 @@ source ./input_parser.sh;
 protoc --version;
 pushd /app;
 
-RUN git config --local user.email "action@github.com"
-RUN git config --local user.name "GitHub Action"
+git config --local user.email "action@github.com"
+git config --local user.name "GitHub Action"
 
 log_debug "Lang = $languages | Generator = $generator | Schema Files = $schema_files_unseperated | Code Path = $codepath | Commit Msg = $commit_msg";
 
