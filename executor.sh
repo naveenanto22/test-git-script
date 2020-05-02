@@ -51,7 +51,7 @@ generate_code_for_language() {
             source $code_generator;
         else
             log "Code generator file not found"
-            exit -1;
+            exit 1;
         fi
     done
     # stash the changes for the current language
@@ -76,7 +76,6 @@ create_code_branch_for_language() {
             # Might not be needed in our case as we'd have the latest one.
             # WARNING: multiple actions running simultaneously is not handled
 
-            # git pull origin "$code_branch";
         fi
     fi
 
@@ -96,7 +95,7 @@ create_code_branch_for_language() {
         git tag "$tag" 
     fi
 
-    git push -f origin "$code_branch" || exit -1;
+    git push -f origin "$code_branch";
 
 }
 
@@ -120,7 +119,7 @@ create_code_branch_for_languages() {
 
 runner() {
     # move into the workspace
-    pushd $GITHUB_WORKSPACE;
+    pushd $GITHUB_WORKSPACE || return;
 
     # set author
     git config --local user.email "action@github.com"
@@ -152,6 +151,6 @@ Schema Files = $schema_files_unseperated | Code Path = $codepath | Commit Msg = 
 source ./input_parser.sh;
 
 # TODO: Move code_generator.sh to workspace
-cp code_generator.sh $GITHUB_WORKSPACE;
+cp code_generator.sh "$GITHUB_WORKSPACE";
 
 runner;
