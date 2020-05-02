@@ -62,6 +62,14 @@ while [ $# -gt 0 ]; do
             branch_prefix="${2}"
             shift
             ;;
+
+        --base_commit=*)
+            base_commit="${1#*=}"
+            ;;
+        --base_commit)
+            base_commit="${2}"
+            shift
+            ;;
         
         *)
             if [[ $previous_arg == "--schema_files" ]]; then
