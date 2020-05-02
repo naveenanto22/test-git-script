@@ -39,7 +39,7 @@ log_error () {
 
 source ./input_parser.sh;
 
-pushd github/workspace
+pushd /github/workspace
 
 ls -a
 
@@ -89,9 +89,9 @@ for lang in "${languages[@]}"; do
 
     # 2. Remove all exisiting files
     git_files=$(git ls-files);
-    echo "$git_files" | xargs rm -rfd;
+    echo "$git_files" | xargs rm -rf;
     echo "$git_files" | xargs git rm -f --quiet --cached;
-    git ls-files -o | xargs rm -rfd;
+    git ls-files -o | xargs rm -rf;
 
     # 3. Write generated code
     git stash pop;
