@@ -24,4 +24,6 @@ jobs:
 
     - name: 'Schema based Code Generator'
       uses: ./
+      with:
+        params: '--language=js,java --generator=proto --codepath=code/schema'
       
