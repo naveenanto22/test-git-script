@@ -11,3 +11,4 @@ elif [[ "$extension" == "json" ]]; then
 else
     log "Unknown extension!";
     exit -1;
+fi
