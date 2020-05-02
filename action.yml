@@ -4,7 +4,7 @@ description: 'Helps in maintaining schema versions with code'
 
 inputs:
     languages:
-        description: 'Comma separated languages in which you\'d want to generate code.'
+        description: 'Comma separated languages in which you would want to generate code.'
         required: true
     schemafiles:
         description: 'Comma separated schema files to be processed (Glob syntax accepted).'
