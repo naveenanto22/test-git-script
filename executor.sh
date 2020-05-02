@@ -44,7 +44,7 @@ log_error () {
 source ./input_parser.sh;
 
 generate_code_for_language() {
-    lang = "$1";
+    lang="$1";
 
      # Create a local directory to save the code
     if [[ "$codepath" != "./" && "$codepath" != "." && "$codepath" != "../" ]]; then
