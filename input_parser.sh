@@ -66,7 +66,7 @@ while [ $# -gt 0 ]; do
         *)
             if [[ $previous_arg == "--schema_files" ]]; then
                 schema_files_unseperated="$schema_files_unseperated,$1"
-            elif [[ $previous_arg == "--lang" ]]; then
+            elif [[ $previous_arg == "--languages" ]]; then
                 lang_unseparated="$lang,$1"
             else
                 log_error "Unknown input: $1. $previous_arg doesn't accept multiple params!"
@@ -77,18 +77,18 @@ while [ $# -gt 0 ]; do
     shift
 done
 
-# Default language as `java`
+# Default language to `java`
 lang_unseparated=${lang_unseparated:-"java"}
 languages=(${lang_unseparated//,/ })
 
-# Default generator as `proto`
+# Default generator to `proto`
 generator=${generator:-"proto"}
 
-# Default schema file as `schema.{generator}`
+# Default schema file to `schema.{generator}`
 schema_files_unseperated=${schema_files_unseperated:-"schema.$generator"}
 schema_files=(${schema_files_unseperated//,/ })
 
-# Default code path as `schema/`
+# Default code path to `schema/`
 codepath=${codepath:-"schema"}
 
 # Get the latest commit message from current workspace
@@ -98,8 +98,8 @@ latest_commit_sha=${latest_commit:0:6};
 # Defaults to "Code generated for the {latest_commit_sha}"
 commit_msg=${commit_msg:-"Code generated for $latest_commit_sha"};
 
-# Default version as `latest`
+# Default version to `latest`
 version=${version:-"latest"}
 
-# Default branch_prefix as `code`
+# Default branch_prefix to `code`
 branch_prefix=${branch_prefix:-"code"}

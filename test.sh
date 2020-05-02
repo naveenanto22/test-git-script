@@ -55,7 +55,7 @@ for (( idx=${#languages[@]}-1 ; idx>=0 ; idx-- )) ; do
     fi
 
     # Run code generator for each schema file
-    for schema_file in ${schema_files[@]}; do
+    for schema_file in "${schema_files[@]}"; do
         if [[ -f "./code_generator.sh" ]]; 
         then
             source ./code_generator.sh;
@@ -65,11 +65,11 @@ for (( idx=${#languages[@]}-1 ; idx>=0 ; idx-- )) ; do
     done
 
     # stash the changes for the current language
-    git stash -u -m ${lang};
+    git stash -u -m "${lang}";
 done
 
 # Iterate over languages in natural order as items were stashed in reverse order
-for lang in ${languages[@]}; do
+for lang in "${languages[@]}"; do
 
     # 1. Create a branch for language
 
@@ -100,4 +100,4 @@ for lang in ${languages[@]}; do
 done
 
 # Move back to source branch
-git checkout $source_branch;
+git checkout "$source_branch";
