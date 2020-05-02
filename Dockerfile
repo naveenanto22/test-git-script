@@ -9,9 +9,11 @@ RUN apk add --no-cache \
     curl \
     protobuf
 
+COPY "test.sh" test.sh
+COPY "input_parser.sh" input_parser.sh
+
 WORKDIR /app
-# COPY "test.sh" test.sh
-# COPY "input_parser.sh" input_parser.sh
-COPY . .
+RUN git init
+COPY ../schema.proto schema.proto
 
 ENTRYPOINT ["./test.sh"]
