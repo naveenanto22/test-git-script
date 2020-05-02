@@ -41,6 +41,9 @@ source ./input_parser.sh;
 protoc --version;
 pushd /app;
 
+RUN git config --local user.email "action@github.com"
+RUN git config --local user.name "GitHub Action"
+
 log_debug "Lang = $languages | Generator = $generator | Schema Files = $schema_files_unseperated | Code Path = $codepath | Commit Msg = $commit_msg";
 
 # Get source branch info
@@ -62,14 +65,14 @@ for (( idx=${#languages[@]}-1 ; idx>=0 ; idx-- )) ; do
         # then
         #     source ./code_generator.sh;
         # else
-        log_info "Schema file = $schema_file"
+        log_info "Schema file = $schema_file --${lang}_out=$codepath"
         protoc "$schema_file" --"${lang}_out"="$codepath";
         # fi
     done
-    ls -a;
-    git ls-files;
+    ls $codepath -a;
+    git status;
     # stash the changes for the current language
-    git stash -u -m "${lang}";
+    git stash -u;
 done
 
 # Iterate over languages in natural order as items were stashed in reverse order

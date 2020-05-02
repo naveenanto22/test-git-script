@@ -8,13 +8,8 @@ RUN apk add --no-cache \
     bash \
     curl \
     protobuf
-
-COPY "test.sh" test.sh
-COPY "input_parser.sh" input_parser.sh
-
-WORKDIR /app
-RUN git init
-COPY /schema.proto ./schema.proto
-
-WORKDIR /a
+    
+COPY . .
+COPY . /app
+WORKDIR /
 ENTRYPOINT ["./test.sh"]
