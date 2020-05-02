@@ -7,4 +7,4 @@ RUN apk add --no-cache \
 COPY "test.sh" test.sh
 COPY "input_parser.sh" input_parser.sh
 
-ENTRYPOINT ["sh", "test.sh"]
+ENTRYPOINT ["./test.sh"]
