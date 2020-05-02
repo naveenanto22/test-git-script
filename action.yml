@@ -1,12 +1,6 @@
 name: 'SchemaMaintainer'
 description: 'Helps in maintaining schema versions with code'
-inputs:
-    params:
-        description: 'executable params'
-        required: true
-        default: '--language=js,java --generator=proto --codepath=code/schema'
+
 runs:
     using: 'docker'
     image: 'Dockerfile'
-    args:
-        - ${{ inputs.params }}
