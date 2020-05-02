@@ -67,7 +67,8 @@ for (( idx=${#languages[@]}-1 ; idx>=0 ; idx-- )) ; do
         protoc "$schema_file" --"${lang}_out"="$codepath";
         # fi
     done
-
+    ls -a;
+    git ls-files;
     # stash the changes for the current language
     git stash -u -m "${lang}";
 done
