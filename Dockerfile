@@ -11,5 +11,4 @@ RUN apk add --no-cache \
 RUN npm install -g quicktype
 
 COPY *.sh /
-COPY code_generator.sh /github/workspace
 ENTRYPOINT ["./test.sh"]

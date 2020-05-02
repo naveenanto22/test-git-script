@@ -43,7 +43,9 @@ log_error () {
 
 source ./input_parser.sh;
 
-#move into the workspace
+# TODO: Move code_generator.sh to workspace
+
+# move into the workspace
 pushd /github/workspace;
 
 # set author
