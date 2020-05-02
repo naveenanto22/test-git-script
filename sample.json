@@ -11,8 +11,7 @@
         "name": "sun1",
         "hOffset": 250,
         "vOffset": 250,
-        "alignment": "center",
-        "alt": "sun"
+        "alignment": "center"
     },
     "text": {
         "data": "Click Here",
