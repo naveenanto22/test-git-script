@@ -38,8 +38,8 @@ log_error () {
 ###############################
 
 source ./input_parser.sh;
-
-pushd /app
+protoc --version;
+pushd /app;
 
 log_debug "Lang = $languages | Generator = $generator | Schema Files = $schema_files_unseperated | Code Path = $codepath | Commit Msg = $commit_msg";
 
