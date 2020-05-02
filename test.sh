@@ -13,6 +13,10 @@ LIGHT_GREY='\033[0;37m';
 YELLOW='\033[1;33m';
 NC='\033[0m';
 
+log () {
+    echo "$1";
+}
+
 log_info () {
     echo "${LIGHT_GREY}$1${NC}";
 }
@@ -42,14 +46,14 @@ source ./input_parser.sh;
 #move into the workspace
 pushd /github/workspace;
 
+# set author
 git config --local user.email "action@github.com"
 git config --local user.name "GitHub Action"
 
-log_debug "Lang = $languages | Generator = $generator | Schema Files = $schema_files_unseperated | Code Path = $codepath | Commit Msg = $commit_msg";
+log "Lang = $languages | Generator = $generator | Schema Files = $schema_files_unseperated | Code Path = $codepath | Commit Msg = $commit_msg";
 
 # Get source branch info
 source_branch=$(git rev-parse --abbrev-ref HEAD);
-log_debug "Source branch : $source_branch";
 
 # Iterate through languages in reverse inorder for git stash to be in given order
 for (( idx=${#languages[@]}-1 ; idx>=0 ; idx-- )) ; do
