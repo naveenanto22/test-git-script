@@ -26,7 +26,7 @@ jobs:
       uses: ./
       with:
         languages: 'csharp,python'
-        schemafiles: '*.proto'
+        schema_files: '*.proto'
         codepath: 'generated/'
         params: '--branch_prefix=gencode'
       
