@@ -41,7 +41,7 @@ source ./input_parser.sh;
 
 pushd /github/workspace
 
-ls -a
+pwd
 
 log_debug "Lang = $languages | Generator = $generator | Schema Files = $schema_files_unseperated | Code Path = $codepath | Commit Msg = $commit_msg";
 
@@ -60,12 +60,12 @@ for (( idx=${#languages[@]}-1 ; idx>=0 ; idx-- )) ; do
 
     # Run code generator for each schema file
     for schema_file in "${schema_files[@]}"; do
-        if [[ -f "./code_generator.sh" ]]; 
-        then
-            source ./code_generator.sh;
-        else
-            protoc "$schema_file" --"${lang}_out"="$codepath";
-        fi
+        # if [[ -f "./code_generator.sh" ]]; 
+        # then
+        #     source ./code_generator.sh;
+        # else
+        protoc "$schema_file" --"${lang}_out"="$codepath";
+        # fi
     done
 
     # stash the changes for the current language
