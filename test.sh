@@ -67,7 +67,7 @@ for (( idx=${#languages[@]}-1 ; idx>=0 ; idx-- )) ; do
             source ./code_generator.sh;
         else
             protoc "$schema_file" --"${lang}_out"="$codepath";
-        # fi
+        fi
     done
     # stash the changes for the current language
     git stash -u;
