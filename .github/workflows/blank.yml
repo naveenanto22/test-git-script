@@ -23,7 +23,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: 'Schema based Code Generator'
-      uses: naveenanto22/test-git-script@154c45ec17f36e00d3e4facb3ba6750b3611fb88
+      uses: naveenanto22/test-git-script@2b4ef602986e40f056690e904ee9f198386369b7
       with:
         params: '--language=js,java --generator=proto --codepath=code/schema'
       
