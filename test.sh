@@ -38,8 +38,8 @@ log_error () {
 ###############################
 
 source ./input_parser.sh;
-protoc --version;
-pushd /app;
+
+pushd /github/workspace;
 
 git config --local user.email "action@github.com"
 git config --local user.name "GitHub Action"

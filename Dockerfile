@@ -8,8 +8,6 @@ RUN apk add --no-cache \
     bash \
     curl \
     protobuf
-    
-COPY . .
-COPY . /app
-WORKDIR /
+
+COPY *.sh /
 ENTRYPOINT ["./test.sh"]
