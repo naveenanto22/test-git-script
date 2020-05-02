@@ -39,9 +39,7 @@ log_error () {
 
 source ./input_parser.sh;
 
-pushd /github/workspace
-
-pwd
+pushd /github/workspaceå
 
 log_debug "Lang = $languages | Generator = $generator | Schema Files = $schema_files_unseperated | Code Path = $codepath | Commit Msg = $commit_msg";
 
@@ -64,6 +62,7 @@ for (( idx=${#languages[@]}-1 ; idx>=0 ; idx-- )) ; do
         # then
         #     source ./code_generator.sh;
         # else
+        log_info "Schema file = $schema_file"
         protoc "$schema_file" --"${lang}_out"="$codepath";
         # fi
     done
