@@ -39,6 +39,7 @@ log_error () {
 
 source ./input_parser.sh;
 
+#move into the workspace
 pushd /github/workspace;
 
 git config --local user.email "action@github.com"
@@ -61,16 +62,13 @@ for (( idx=${#languages[@]}-1 ; idx>=0 ; idx-- )) ; do
 
     # Run code generator for each schema file
     for schema_file in "${schema_files[@]}"; do
-        # if [[ -f "./code_generator.sh" ]]; 
-        # then
-        #     source ./code_generator.sh;
-        # else
-        log_info "Schema file = $schema_file --${lang}_out=$codepath"
-        protoc "$schema_file" --"${lang}_out"="$codepath";
+        if [[ -f "./code_generator.sh" ]]; 
+        then
+            source ./code_generator.sh;
+        else
+            protoc "$schema_file" --"${lang}_out"="$codepath";
         # fi
     done
-    ls $codepath -a;
-    git status;
     # stash the changes for the current language
     git stash -u;
 done
