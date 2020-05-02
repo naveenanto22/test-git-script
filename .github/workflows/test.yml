@@ -25,5 +25,8 @@ jobs:
     - name: 'Schema based Code Generator'
       uses: ./
       with:
-        params: 'csharp'
+        languages: 'csharp,python'
+        schema_files: '*.proto'
+        codepath: 'generated/'
+        params: '--branch_prefix=gencode'
       
