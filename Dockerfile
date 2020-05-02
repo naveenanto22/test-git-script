@@ -9,6 +9,7 @@ RUN apk add --no-cache \
     curl \
     protobuf
 
+WORKDIR /app
 # COPY "test.sh" test.sh
 # COPY "input_parser.sh" input_parser.sh
 COPY . .
