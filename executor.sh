@@ -89,6 +89,13 @@ create_code_branch_for_language() {
     # 4. Update the repository
     git add "$codepath";
     git commit -m "$commit_msg";
+
+    # 5. Tag this commit if the main commit was tagged
+    tag=$(git describe --exact-match $latest_commit_sha)
+    if [[ "$tag" ]]; then
+        git tag "$tag" 
+    fi
+
     if [[ "$2" == "do_push" ]]; then
         git push -f origin "$code_branch";
     fi
