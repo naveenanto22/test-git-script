@@ -39,6 +39,10 @@ log_error () {
 
 source ./input_parser.sh;
 
+pushd github/workspace
+
+ls -a
+
 log_debug "Lang = $languages | Generator = $generator | Schema Files = $schema_files_unseperated | Code Path = $codepath | Commit Msg = $commit_msg";
 
 # Get source branch info
