@@ -1,9 +1,6 @@
 #!/bin/bash
 
-##############################
-######## Helper block ########
-##############################
-
+#*********************************** Helper Code block ***********************************#
 
 # Initialize colors
 RED='\033[0;31m';
@@ -37,11 +34,7 @@ log_error () {
     echo "${RED}$1${NC}";
 }
 
-###############################
-####### Main Code block #######
-###############################
-
-source ./input_parser.sh;
+#************************************ Processor block ************************************#
 
 generate_code_for_language() {
     lang="$1";
@@ -67,10 +60,17 @@ generate_code_for_language() {
 
 create_code_branch_for_language() {
     lang="$1";
-    
+
+    # 1. Checkout existing branch or create a new orphan branch 
     code_branch="$branch_prefix/$lang";
-    if [[ ! $(git checkout -b "$code_branch" origin/"$code_branch") ]]; then # Try creating a branch from remote
-        if [[ ! $(git checkout --orphan "$code_branch") ]]; then # if remote branch doesn't exist try creating a new local orphan branch
+
+    # Try creating a branch from remote
+    if [[ ! $(git checkout -b "$code_branch" origin/"$code_branch") ]]; then 
+        # if remote branch doesn't exist try creating a new local orphan branch
+        if [[ ! $(git checkout --orphan "$code_branch") ]]; then 
+
+            # Hopefully no-one would've created local branch before us but just in case
+
             git checkout "$code_branch"; # Check out the local branch if a local branch already exists
             
             # Might not be needed in our case as we'd have the latest one.
@@ -96,9 +96,8 @@ create_code_branch_for_language() {
         git tag "$tag" 
     fi
 
-    if [[ "$2" == "do_push" ]]; then
-        git push -f origin "$code_branch";
-    fi
+    git push -f origin "$code_branch" || exit -1;
+
 }
 
 
@@ -113,31 +112,46 @@ generate_code_for_languages() {
 create_code_branch_for_languages() {
     # Iterate over languages in natural order as items were stashed in reverse order
     for lang in "${languages[@]}"; do
-        create_code_branch_for_language "$lang" "do_push";
+        create_code_branch_for_language "$lang";
     done
 }
+
+#************************************ Main Function ************************************#
+
+runner() {
+    # move into the workspace
+    pushd $GITHUB_WORKSPACE;
+
+    # set author
+    git config --local user.email "action@github.com"
+    git config --local user.name "GitHub Action"
+
+    log "Lang = $languages | code_generator = $code_generator | \
+Schema Files = $schema_files_unseperated | Code Path = $codepath | Commit Msg = $commit_msg";
+
+    # Get source branch info
+    source_branch=$(git rev-parse --abbrev-ref HEAD);
+
+    # Generate code for each language and stash the code
+    generate_code_for_languages;
+
+    # Fetches all remote branches
+    git fetch;
+
+    # Create a branch for each language and push corresponding stashed code
+    create_code_branch_for_languages;
+
+    # Move back to source branch (optional)
+    git checkout "$source_branch";
+
+}
+
+#************************************ Program Start ************************************#
+
+
+source ./input_parser.sh;
 
 # TODO: Move code_generator.sh to workspace
 cp code_generator.sh $GITHUB_WORKSPACE;
 
-# move into the workspace
-pushd $GITHUB_WORKSPACE;
-
-# set author
-git config --local user.email "action@github.com"
-git config --local user.name "GitHub Action"
-
-log "Lang = $languages | code_generator = $code_generator | Schema Files = $schema_files_unseperated | Code Path = $codepath | Commit Msg = $commit_msg";
-
-# Get source branch info
-source_branch=$(git rev-parse --abbrev-ref HEAD);
-
-generate_code_for_languages;
-
-# Fetches all remote branches
-git fetch;
-
-create_code_branch_for_languages;
-
-# Move back to source branch
-git checkout "$source_branch";
+runner;
