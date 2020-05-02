@@ -44,9 +44,10 @@ log_error () {
 source ./input_parser.sh;
 
 # TODO: Move code_generator.sh to workspace
+cp code_generator.sh $GITHUB_WORKSPACE;
 
 # move into the workspace
-pushd /github/workspace;
+pushd $GITHUB_WORKSPACE;
 
 # set author
 git config --local user.email "action@github.com"
