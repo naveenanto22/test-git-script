@@ -50,7 +50,7 @@ pushd /github/workspace;
 git config --local user.email "action@github.com"
 git config --local user.name "GitHub Action"
 
-log "Lang = $languages | Generator = $generator | Schema Files = $schema_files_unseperated | Code Path = $codepath | Commit Msg = $commit_msg";
+log "Lang = $languages | code_generator = $code_generator | Schema Files = $schema_files_unseperated | Code Path = $codepath | Commit Msg = $commit_msg";
 
 # Get source branch info
 source_branch=$(git rev-parse --abbrev-ref HEAD);
@@ -64,13 +64,15 @@ for (( idx=${#languages[@]}-1 ; idx>=0 ; idx-- )) ; do
         mkdir -p "$codepath";
     fi
 
-    # Run code generator for each schema file
+    # Run code code_generator for each schema file
     for schema_file in "${schema_files[@]}"; do
-        if [[ -f "./code_generator.sh" ]]; 
+        if [[ -f $code_generator ]]; 
         then
-            source ./code_generator.sh;
+            source $code_generator;
         else
-            protoc "$schema_file" --"${lang}_out"="$codepath";
+            log "Code generator file not found"
+            exit -1;
+            # protoc "$schema_file" --"${lang}_out"="$codepath";
         fi
     done
     # stash the changes for the current language

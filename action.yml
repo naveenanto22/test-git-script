@@ -6,13 +6,17 @@ inputs:
     languages:
         description: 'Comma separated languages in which you would want to generate code.'
         required: true
-    schemafiles:
+    schema_files:
         description: 'Comma separated schema files to be processed (Glob syntax accepted).'
         required: true
     codepath:
         description: 'Director(y|ies) to place the generated code.'
         required: false
         default: 'code/'
+    code_generator:
+        description: 'Shell script that generates the code in {codepath}'
+        required: false
+        default: 'code_generator.sh'
     params:
         description: 'Other params include --commitmsg , --branch_prefix ( branch name will be {branch_prefix}/{language} )'
         required: false
@@ -23,6 +27,7 @@ runs:
     image: 'Dockerfile'
     args:
         - '--languages=${{ inputs.languages }}'
-        - '--schema_files=${{ inputs.schemafiles }}'
+        - '--schema_files=${{ inputs.schema_files }}'
         - '--codepath=${{ inputs.codepath }}'
+        - '--code_generator=${{ inputs.code_generator }}'
         - '${{ inputs.params }}'

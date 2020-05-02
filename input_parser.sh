@@ -18,12 +18,12 @@ while [ $# -gt 0 ]; do
             shift
             ;;
 
-        # 2. Get generator (proto, avro, json etc...)
-        --generator=*)
-            generator="${1#*=}"
+        # 2. Get code_generator (proto, avro, json etc...)
+        --code_generator=*)
+            code_generator="${1#*=}"
             ;;
-        --generator)
-            generator="${2}"
+        --code_generator)
+            code_generator="${2}"
             shift
             ;;
 
@@ -81,11 +81,11 @@ done
 lang_unseparated=${lang_unseparated:-"java"}
 languages=(${lang_unseparated//,/ })
 
-# Default generator to `proto`
-generator=${generator:-"proto"}
+# Default code_generator to `proto`
+code_generator=${code_generator:-"code_generator.sh"}
 
-# Default schema file to `schema.{generator}`
-schema_files_unseperated=${schema_files_unseperated:-"schema.$generator"}
+# Default schema file to `schema.{code_generator}`
+schema_files_unseperated=${schema_files_unseperated:-"schema.$code_generator"}
 schema_files=(${schema_files_unseperated//,/ })
 
 # Default code path to `schema/`
