@@ -11,4 +11,4 @@ RUN apk add --no-cache \
 RUN npm install -g quicktype
 
 COPY *.sh /
-ENTRYPOINT ["./test.sh"]
+ENTRYPOINT ["./executor.sh"]

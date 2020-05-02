@@ -61,7 +61,6 @@ create_stash_per_language() {
             else
                 log "Code generator file not found"
                 exit -1;
-                # protoc "$schema_file" --"${lang}_out"="$codepath";
             fi
         done
         # stash the changes for the current language
@@ -80,7 +79,9 @@ create_language_specific_branch_per_stash() {
             if [[ ! $(git checkout --orphan "$code_branch") ]]; then # if remote branch doesn't exist try creating a new local orphan branch
                 git checkout "$code_branch"; # Check out the local branch if a local branch already exists
                 
-                # Might not be needed in our case
+                # Might not be needed in our case as we'd have the latest one.
+                # WARNING: multiple actions running simultaneously is not handled
+
                 # git pull origin "$code_branch";
             fi
         fi
