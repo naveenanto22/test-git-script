@@ -2,7 +2,7 @@ FROM alpine:3.10
 
 RUN apk add --no-cache git
 
-COPY "test.sh" /usr/bin/runner
+COPY "test.sh" /usr/bin/test.sh
 COPY "input_parser.sh" /usr/bin/input_parser.sh
 
-CMD ["sh", "/usr/bin/runner"]
+ENTRYPOINT ["/usr/bin/test.sh"]
