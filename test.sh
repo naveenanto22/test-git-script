@@ -89,7 +89,7 @@ for lang in "${languages[@]}"; do
 
     code_branch="$branch_prefix/$lang";
     if [[ ! $(git checkout -b "$code_branch" origin/"$code_branch") ]]; then # Try creating a branch from remote
-        if [[ ! $(git checkout -b "$code_branch") ]]; then # if remote branch doesn't exist try creating a new local branch
+        if [[ ! $(git checkout --orphan "$code_branch") ]]; then # if remote branch doesn't exist try creating a new local orphan branch
             git checkout "$code_branch"; # Check out the local branch if a local branch already exists
             
             # Might not be needed in our case
