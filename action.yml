@@ -3,7 +3,7 @@ description: 'Helps in maintaining schema versions with code'
 inputs:
     params:
         description: 'executable params'
-        required: true
+        required: false
         default: '--language=js,java --generator=proto --codepath=code/schema'
 runs:
     using: 'docker'
