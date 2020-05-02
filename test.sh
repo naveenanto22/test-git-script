@@ -82,6 +82,9 @@ for (( idx=${#languages[@]}-1 ; idx>=0 ; idx-- )) ; do
     git stash -u;
 done
 
+# Fetches all remote branches
+git fetch;
+
 # Iterate over languages in natural order as items were stashed in reverse order
 for lang in "${languages[@]}"; do
 
