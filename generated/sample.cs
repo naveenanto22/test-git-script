@@ -49,9 +49,6 @@ namespace QuickType
 
         [JsonProperty("vOffset")]
         public long VOffset { get; set; }
-
-        [JsonProperty("alignment")]
-        public string Alignment { get; set; }
     }
 
     public partial class Text
