@@ -88,6 +88,9 @@ namespace QuickType
 
         [JsonProperty("height")]
         public long Height { get; set; }
+
+        [JsonProperty("sleep")]
+        public long Sleep { get; set; }
     }
 
     public partial class Sample
