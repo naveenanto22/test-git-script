@@ -161,7 +161,6 @@ const typeMap = {
         { json: "name", js: "name", typ: "" },
         { json: "hOffset", js: "hOffset", typ: 0 },
         { json: "vOffset", js: "vOffset", typ: 0 },
-        { json: "alignment", js: "alignment", typ: "" },
     ], false),
     "Text": o([
         { json: "data", js: "data", typ: "" },
