@@ -72,7 +72,7 @@ In addition to the above inputs the script will have access to `schema_file` and
 
 > Make sure to output the generated code to `$codepath`
 
-*all inputs mentioned above including schema_file and lang can also be used locally (`$commit_msg, $codepath, $lang`)*
+*Note: All inputs mentioned above including schema_file and lang can also be used locally (`$commit_msg, $codepath, $lang`)*
 
 ## Container
 
