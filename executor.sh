@@ -121,6 +121,10 @@ runner() {
     # move into the workspace
     pushd $GITHUB_WORKSPACE || return;
 
+    if [[ -f "pre_process_hook.sh" ]]; then
+        source ./pre_process_hook.sh
+    fi
+
     # set author
     git config --local user.email "action@github.com"
     git config --local user.name "GitHub Action"
@@ -143,6 +147,9 @@ Schema Files = $schema_files_unseperated | Code Path = $codepath | Commit Msg = 
     # Move back to source branch (optional)
     git checkout "$source_branch";
 
+    if [[ -f "post_process_hook.sh" ]]; then
+        source ./post_process_hook.sh
+    fi
 }
 
 #************************************ Program Start ************************************#
