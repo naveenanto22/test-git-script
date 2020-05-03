@@ -35,7 +35,7 @@ Performs schema specific code generation and maintains a separate branch for gen
     codepath: ''          
     
     
-    # Shell script that generates the code.`code_generator.sh` can't be used as filename
+    # Shell script that generates the code. `code_generator.sh` can't be used as filename
     # The file can also be a path relative to the workspace
     # See [Code Generator Script](#code-generator-script) for more details
     #
@@ -63,10 +63,33 @@ Performs schema specific code generation and maintains a separate branch for gen
     
     commit_msg: '_'
 ```
+
 ## Code Generator Script 
 
-Code generator is called for each schema file per language. In addition to the above inputs the script will have access to `schema_file` and `lang` for current schema file and language being processed respectively.
+Shell script that will be called for each schema file per language to generate code. File name `code_generator.sh` is used as default and therefore can't be used for custom script. Custom scripts are sourced into the code.Dec
 
-Make sure to output the generated code to `$codepath`
+In addition to the above inputs the script will have access to `schema_file` and `lang` indicating the current schema file and language being processed respectively.
 
-all inputs mentioned above including schema_file and lang can also be used locally. eg: `$commit_msg, $codepath, $lang`
+> Make sure to output the generated code to `$codepath`
+
+*all inputs mentioned above including schema_file and lang can also be used locally (`$commit_msg, $codepath, $lang`)*
+
+## Container
+
+Your scripts will run in latest `alpine` environment inside docker. The container is pre-installed with following:
+
+    git
+    bash
+    curl
+    protobuf
+    nodejs
+    nodejs-npm
+    quicktype
+
+## Hooks [ Partial Implementation ]
+
+Create files `pre_process_hook.sh` and `post_process_hook.sh` in the main working directory. These files will be sourced before and after the process respectively.
+
+*Note: Both scripts execute in the branch where push was invoked.*
+
+
