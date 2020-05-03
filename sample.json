@@ -3,7 +3,8 @@
         "title": "Sample Konfabulator Widget",
         "name": "main_window",
         "width": 500,
-        "height" : 600
+        "height" : 600,
+        "sleep" : 10
     },
     "image": { 
         "src": "Images/Sun.png",
