@@ -103,11 +103,18 @@ codepath=${codepath:-"schema"}
 latest_commit=$(git log --oneline | head -n 1);
 latest_commit_sha=${latest_commit:0:6};
 
+if [[ $commit_msg == "_" ]]; then 
+    $commit_msg = "";
+fi
+
 # Defaults to "Code generated for the {latest_commit_sha}"
 commit_msg=${commit_msg:-"Code generated for $latest_commit_sha"};
 
 # Default version to `latest`
 version=${version:-"latest"}
 
+current_branch_name="${GITHUB_REF##*/}";
+
 # Default branch_prefix to `code`
-branch_prefix=${branch_prefix:-"code"}
+branch_prefix=${branch_prefix:-"gencode"}
+branch_prefix="$branch_prefix-$current_branch_name"
