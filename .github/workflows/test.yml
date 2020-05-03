@@ -23,7 +23,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: 'Schema based Code Generator'
-      uses: ./
+      uses: naveenanto22/schemacodeman@7c8c75c91eaeb909116bfe2ccaa68fe6c8f31b59
       with:
         languages: 'cs,js'
         schema_files: '*.json'
