@@ -1,11 +1,11 @@
 # Schema Manager
 
-Performs schema specific action on a new branch. Most common use case would include generating code based on schema and maintaining it in a separate branch.
+Performs schema specific code generation and maintains a separate branch for generated code. Helps to maintain code in sync with schema evolution.
 
 ## Usage
 
 ```yaml
-- uses: actions/schema_manager@v1
+- uses: naveenanto22/schemacodeman@v1
   with:
   
     # Comma separated languages for code generation as required by code generator.
@@ -59,10 +59,6 @@ Performs schema specific action on a new branch. Most common use case would incl
     # [ ex: 'Auto-generated code' ]
     #
     # optional (default : 'Code generated for {commit_sha}')
+    
     commit_msg: '_'
 ```
-## Example usage
-
-uses: actions/hello-world-docker-action@v1
-with:
-  who-to-greet: 'Mona the Octocat'
