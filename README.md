@@ -1,4 +1,4 @@
-# Schema Manager
+# Schema-Code Manager
 
 Performs schema specific code generation and maintains a separate branch for generated code. Helps to maintain code in sync with schema evolution.
 
@@ -37,6 +37,7 @@ Performs schema specific code generation and maintains a separate branch for gen
     
     # Shell script that generates the code.`code_generator.sh` can't be used as filename
     # The file can also be a path relative to the workspace
+    # See [Code Generator Script](#code-generator-script) for more details
     #
     # [ ex: 'custom_generator.sh' ,  'scripts/my_generator.sh']
     #
@@ -62,3 +63,10 @@ Performs schema specific code generation and maintains a separate branch for gen
     
     commit_msg: '_'
 ```
+## Code Generator Script 
+
+Code generator is called for each schema file per language. In addition to the above inputs the script will have access to `schema_file` and `lang` for current schema file and language being processed respectively.
+
+Make sure to output the generated code to `$codepath`
+
+all inputs mentioned above including schema_file and lang can also be used locally. eg: `$commit_msg, $codepath, $lang`
