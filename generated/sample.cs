@@ -23,9 +23,6 @@ namespace QuickType
 
     public partial class Widget
     {
-        [JsonProperty("debug")]
-        public string Debug { get; set; }
-
         [JsonProperty("window")]
         public Window Window { get; set; }
 
