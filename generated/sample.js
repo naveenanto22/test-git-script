@@ -151,7 +151,6 @@ const typeMap = {
         { json: "widget", js: "widget", typ: r("Widget") },
     ], false),
     "Widget": o([
-        { json: "debug", js: "debug", typ: "" },
         { json: "window", js: "window", typ: r("Window") },
         { json: "image", js: "image", typ: r("Image") },
         { json: "text", js: "text", typ: r("Text") },
