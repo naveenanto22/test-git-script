@@ -176,7 +176,6 @@ const typeMap = {
         { json: "name", js: "name", typ: "" },
         { json: "width", js: "width", typ: 0 },
         { json: "height", js: "height", typ: 0 },
-        { json: "sleep", js: "sleep", typ: 0 },
     ], false),
 };
 
